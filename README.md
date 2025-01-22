@@ -41,7 +41,7 @@ Este script utiliza un Vector3 para almacenar la distancia entre cámara y jugad
 Variables utilizadas:
 ```bash
 public GameObject player; # Referencia al objeto jugador
-private Vector3 offset; # Almacena la distancia entre cámara y jugador
+private Vector3 offset;   # Almacena la distancia entre cámara y jugador
 ```
 
 Al comienzo, mediante el método Start(), se calcula la distancia entre jugador y cámara para almacenarla como Vector3:
@@ -66,8 +66,31 @@ void LateUpdate(){
 
 
 
-## Camara Global
+## Camara global
 
 [Codigo CameraSwitch](Assets/Scripts/Camera_World.cs)
 
-Este script utiliza los metodos LookAt() para mantener la vista al entorno de juego y Translate() para aplaicar un Vector3(1.0,0,0) * velocidad para mantener la camara rotando al rededor del entorno;
+Este script utiliza enfoca la camara hacia un blanco y va girando alrededor de este.
+
+<details>
+ <summary>Explicación del código</summary>
+<br>
+
+Variables utilizadas:
+```bash
+public Transform target; # Referencia al componente transform del que queramos apuntar (en este caso, es el conjunto de niveles/escenarios)
+public float speed;      # Velocidad de movimiento de la cámara
+```
+
+Cada llamada del método Update() mantenemos la cámara apuntando al blanco y girando al rededor de el:
+```bash
+void Update(){
+    transform.LookAt(target);                   # Mantiene la camara enfocado al entorno de juego (target)
+    transform.Translate(Vector3.right * speed); # Mueve la cámara continuamente en la dirección derecha 
+}
+```
+
+Al mantener el eje Z enfocado hacia el blanco evitamos que la cámara se desplace hacia la derecha indefinidamente y la forzamos a rotar al rededor del objeto. 
+
+---
+</details>
