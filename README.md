@@ -4,7 +4,29 @@
 
 [Codigo CameraSwitch](Assets/Scripts/CameraSwitch.cs)
 
-Este script contiene tres variables para almacenar las tres camaras de proyecto y metodos correspondientes para su activacion y desactivacion.
+Este script contiene tres variables para almacenar las tres cámaras de proyecto y los métodos correspondientes para su activación y desactivación.
+
+<details>
+ <summary>Explicación del código</summary>
+<br>
+
+Variables que permiten asociar manualmente las cámaras:
+```bash
+public GameObject firstPersonCamera;
+public GameObject thirdPersonCamera;
+public GameObject WorldCamera;
+```
+
+En el método Update se detecta si el jugador presiona alguna de las teclas pertinentes (1,2,3) y llama al método correspondiente para activar a cada cámara:
+```bash
+private void Update() {
+    if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        ActivateFirstPersonCamera(); # Activa camara de primera persona y desactiva el resto
+    }
+    ....
+```
+---
+</details>
 
 ## Camara tercera persona
 
@@ -16,7 +38,7 @@ Este script utiliza un Vector3 para almacenar la distancia entre camara y jugado
 
 
 
-## Camara plano completo
+## Camara Global
 
 [Codigo CameraSwitch](Assets/Scripts/Camera_World.cs)
 
