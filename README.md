@@ -32,7 +32,35 @@ private void Update() {
 
 [Codigo CameraSwitch](Assets/Scripts/CameraController.cs)
 
-Este script utiliza un Vector3 para almacenar la distancia entre camara y jugador, para posteriormente utilizarla para mantener esa distancia independientemente del movimiento del jugador.
+Este script utiliza un Vector3 para almacenar la distancia entre cámara y jugador y poder así seguir al jugador manteniendo una distancia constante.
+
+<details>
+ <summary>Explicación del código</summary>
+<br>
+
+Variables utilizadas:
+```bash
+public GameObject player; # Referencia al objeto jugador
+private Vector3 offset; # Almacena la distancia entre cámara y jugador
+```
+
+Al comienzo, mediante el método Start(), se calcula la distancia entre jugador y cámara para almacenarla como Vector3:
+```bash
+void Start(){
+    ....
+    offset = transform.position - player.transform.position;
+}
+```
+
+Mediante LateUpdate la cámara ajusta su posición a la del objeto manteniendo la misma distancia que al comienzo:
+```bash
+void LateUpdate(){
+        transform.position = player.transform.position + offset;
+}
+```
+
+---
+</details>
 
 ## Camara primera persona
 
