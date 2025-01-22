@@ -14,4 +14,10 @@ Este script utiliza un Vector3 para almacenar la distancia entre camara y jugado
 
 ## Camara primera persona
 
+
+
 ## Camara plano completo
+
+[Codigo CameraSwitch](Assets/Scripts/Camera_World.cs)
+
+Este script utiliza los metodos LookAt() para mantener la vista al entorno de juego y Translate() para aplaicar un Vector3(1.0,0,0) * velocidad para mantener la camara rotando al rededor del entorno;
