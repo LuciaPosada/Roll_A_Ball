@@ -15,11 +15,12 @@ public class BosterTrigger : MonoBehaviour {
     }
 
     private IEnumerator Boost(PlayerController player){
-        player.speed += aumentoVelocidad;
+        
+        player.speed = player.speed * aumentoVelocidad;
 
         // Espera el tiempo del boost
         yield return new WaitForSeconds(duracion);
 
-        player.speed -= aumentoVelocidad;
+        player.speed = player.speed / aumentoVelocidad;
     }
 }
