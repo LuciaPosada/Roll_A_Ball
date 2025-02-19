@@ -270,5 +270,32 @@ private IEnumerator Boost(PlayerController player){
 ---
 </details>
 
+## Trigger de Power-Up (Cambios de estados)
+
+[Codigo PowerUp](Assets/Scripts/Triggers/PowerTrigger.cs)
+
+Detecta cuando el jugador entra en su área y activa un Power-Up a través de un script gestor [PowerUpManager](Assets/Scripts/Triggers/PowerUpManager.cs), afectando a todos los enemigos en la escena.
+
+<details>
+ <summary>Explicación del código</summary>
+<br>
+
+Variable con la duración del efecto del Power-Up.
+```bash
+public float duracion; 
+```
+
+De colisionar un jugador, busca todos los objetos en la escena que tengan un Animator y los manda como parametro a PowerUpManager.
+
+```bash
+private void OnTriggerEnter(Collider other) {
+    ...
+    Animator[] enemigosAnimator = FindObjectsOfType<Animator>(); 
+    PowerUpManager.instance.ComenzarPowerUp(enemigosAnimator, duracion);             
+}
+```
+---
+</details>
+
 
 </details>
