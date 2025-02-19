@@ -14,13 +14,15 @@ public class PlayerController : MonoBehaviour{
    private float movementY;
 
    // Speed at which the player moves.
-   public float speed = 0; 
+   public float speed; 
 
    public TextMeshProUGUI countText;
 
    public GameObject winTextObject;
 
    public Transform cameraTransform;
+
+   private Vector3 dir;
 
    // Start is called before the first frame update.
    void Start(){
@@ -32,6 +34,8 @@ public class PlayerController : MonoBehaviour{
         SetCountText();
 
         winTextObject.SetActive(false);
+
+        dir = Vector3.zero;
    }
  
    // This function is called when a move input is detected.
@@ -49,6 +53,15 @@ public class PlayerController : MonoBehaviour{
       // Calcula la dirección de movimiento en base a la cámara
       Vector3 forward = cameraTransform.forward; 
       Vector3 right = cameraTransform.right; 
+/**
+      dir.x = -Input.acceleration.y;
+      dir.z = Input.acceleration.x;
+      if (dir.sqrMagnitude > 1)
+            dir.Normalize();
+        
+      dir *= Time.deltaTime;
+      transform.Translate(dir * speed);
+**/
 
       // Create a 3D movement Vector
       Vector3 movement = forward * movementY + right * movementX;
@@ -56,6 +69,7 @@ public class PlayerController : MonoBehaviour{
 
       //Apply force to the Rigidbody to move the player.
       rb.AddForce(movement * speed); 
+      Debug.Log(speed);
    }
 
    // Check if the object the player collided with has the "PickUp" tag.
@@ -73,9 +87,26 @@ public class PlayerController : MonoBehaviour{
    void SetCountText(){
       countText.text = "Count: " + count.ToString();
 
-      if(count >= 33){
+      if(count >= 38){
          winTextObject.SetActive(true);
+         Destroy(GameObject.FindGameObjectWithTag("Enemy"));
       }
    }
    
+   private void OnCollisionEnter(Collision collision) {
+      if (collision.gameObject.CompareTag("Enemy")) {
+
+         Animator enemigoAnimator = FindObjectOfType<EnemyMovement>().GetComponent<Animator>();
+
+         if(enemigoAnimator.GetCurrentAnimatorStateInfo(0).IsName("Escapar")){
+            enemigoAnimator.SetTrigger("Tocado");
+         }else{
+            // Destroy the current object
+            Destroy(gameObject); 
+            // Update the winText to display "You Lose!"
+            winTextObject.gameObject.SetActive(true);
+            winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+         }
+      }
+   }
 }
