@@ -1,8 +1,12 @@
 # Camaras del proyecto
 
+<details>
+ <summary>Camaras del proyecto</summary>
+<br>
+
 ## Switch de las camaras 
 
-[Codigo CameraSwitch](Assets/Scripts/CameraSwitch.cs)
+[Codigo CameraSwitch](Assets/Scripts/Cameras/CameraSwitch.cs)
 
 Este script contiene tres variables para almacenar las tres cámaras de proyecto y los métodos correspondientes para su activación y desactivación.
 
@@ -30,7 +34,7 @@ private void Update() {
 
 ## Camara tercera persona
 
-[Codigo CameraController](Assets/Scripts/CameraController.cs)
+[Codigo CameraController](Assets/Scripts/Cameras/CameraController.cs)
 
 Este script utiliza un Vector3 para almacenar la distancia entre cámara y jugador y poder así seguir al jugador manteniendo una distancia constante.
 
@@ -64,7 +68,7 @@ void LateUpdate(){
 
 ## Camara primera persona
 
-[Codigo Camara_PrimPersona](Assets/Scripts/Camara_PrimPersona.cs)
+[Codigo Camara_PrimPersona](Assets/Scripts/Cameras/Camara_PrimPersona.cs)
 
 Este script posiciona la cámara a la misma altura y posición que el objeto controlado por el jugador, permitiendo el movimiento horizontal de esta mediante el raton.
 
@@ -93,7 +97,7 @@ void Update(){
 ---
 </details>
 
-[Codigo PlayerController](Assets/Scripts/PlayerController.cs)
+[Codigo PlayerController](Assets/Scripts/Cameras/PlayerController.cs)
 
 Adicionalmente, el script del objeto que control el jugador contiene una variable para recoger los valores de la cámara de primera persona y así poder ajustar el movimiento del jugador en base a la orientación de esta.
 
@@ -138,7 +142,7 @@ private void FixedUpdate(){
 
 ## Camara global
 
-[Codigo Camera_World](Assets/Scripts/Camera_World.cs)
+[Codigo Camera_World](Assets/Scripts/Cameras/Camera_World.cs)
 
 Este script utiliza enfoca la camara hacia un blanco y va girando alrededor de este.
 
@@ -163,4 +167,41 @@ void Update(){
 Al mantener el eje Z enfocado hacia el blanco evitamos que la cámara se desplace hacia la derecha indefinidamente y la forzamos a rotar al rededor del objeto. 
 
 ---
+</details>
+
+</details>
+
+# Triggers del proyecto
+
+<details>
+ <summary>Triggers del proyecto</summary>
+<br>
+
+## Trigger de teletransporte
+
+[Codigo CameraSwitch](Assets/Scripts/Triggers/TeletransporteTrigger.cs)
+
+Este script contiene la posición del destino del teletrasporte y un método para realizar la acción una vez el jugador colisiona con el objecto que contiene el trigger.
+
+<details>
+ <summary>Explicación del código</summary>
+<br>
+
+Referencia al Transform del destino:
+```bash
+public Transform destino;
+```
+
+En el método OnTriggerEnte salta si el jugador entra en colisión con el objecto portador del trigger y cambia su posición actual por la del destino.
+```bash
+private void OnTriggerEnter(Collider colision) {
+    if(colision.CompareTag("Player")){
+          colision.transform.position = destino.position;
+    }
+}
+```
+---
+</details>
+
+
 </details>
