@@ -177,9 +177,9 @@ Al mantener el eje Z enfocado hacia el blanco evitamos que la cámara se desplac
  <summary>Triggers del proyecto</summary>
 <br>
 
-## Trigger de teletransporte
+## Trigger de tele-transporte
 
-[Codigo CameraSwitch](Assets/Scripts/Triggers/TeletransporteTrigger.cs)
+[Codigo Tele-transporte](Assets/Scripts/Triggers/TeletransporteTrigger.cs)
 
 Este script contiene la posición del destino del teletrasporte y un método para realizar la acción una vez el jugador colisiona con el objecto que contiene el trigger.
 
@@ -205,7 +205,7 @@ private void OnTriggerEnter(Collider colision) {
 
 ## Trigger de empujón
 
-[Codigo CameraSwitch](Assets/Scripts/Triggers/PushTrigger.cs)
+[Codigo Empujón](Assets/Scripts/Triggers/PushTrigger.cs)
 
 -.
 
@@ -235,7 +235,7 @@ private void OnCollisionEnter(Collision colision){
 
 ## Trigger de turbo
 
-[Codigo CameraSwitch](Assets/Scripts/Triggers/BosterTrigger.cs)
+[Codigo Turbo](Assets/Scripts/Triggers/BosterTrigger.cs)
 
 -.
 
