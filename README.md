@@ -297,5 +297,15 @@ private void OnTriggerEnter(Collider other) {
 ---
 </details>
 
+</details>
+
+# Gestor de estados (Animator Controller)
+
+<details>
+ <summary>Gestor de estados</summary>
+<br>
+
+// Pendiente 
+
 
 </details>
