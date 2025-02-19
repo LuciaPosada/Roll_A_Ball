@@ -207,7 +207,7 @@ private void OnTriggerEnter(Collider colision) {
 
 [Codigo Empujón](Assets/Scripts/Triggers/PushTrigger.cs)
 
--.
+Aplica una fuerza al jugador cuando colisiona con el objeto que contiene este script.
 
 <details>
  <summary>Explicación del código</summary>
@@ -218,14 +218,14 @@ Variable con la fuerza del empujón.
 public float fuerzaEmpujon = 25f; 
 ```
 
--.
+Al detectar un objeto jugador, se aplica la fuerza especificada hacia la izquierda del objetivo.
 ```bash
 private void OnCollisionEnter(Collision colision){
     if (colision.gameObject.CompareTag("Player")){
        Rigidbody player = colision.gameObject.GetComponent<Rigidbody>();
        if(player != null){
-           Vector3 empuje = transform.right;
-           player.AddForce(empuje*fuerzaEmpujon*-1,ForceMode.Impulse);
+           Vector3 empuje = transform.right;  # Define dirección del empujón (derecha local del objeto)
+           player.AddForce(empuje*fuerzaEmpujon*-1,ForceMode.Impulse); # Cambia dirección del empujón a la contraria
        }
     }
 }
@@ -237,7 +237,7 @@ private void OnCollisionEnter(Collision colision){
 
 [Codigo Turbo](Assets/Scripts/Triggers/BosterTrigger.cs)
 
--.
+Aumenta la velocidad, de un jugador que entre en conctacto con el objeto que contiene este script, por un tiempo determinado y luego la devuelve a la normalidad usando una corrutina.
 
 <details>
  <summary>Explicación del código</summary>
@@ -249,12 +249,22 @@ public float aumentoVelocidad;  # Cantidad por la que se multiplicara la velocid
 public float duracion;          # Duración del aumento de velocidad
 ```
 
--.
+Cuando un objeto entra en el área de Trigger se llama a la corrutina pasándole el componente PlayerController del jugador.
+
 ```bash
 private void OnTriggerEnter(Collider colision){
     ...
     StartCoroutine(Boost(player));  # LLamada a Corrutina
-    ...
+```
+
+Cuando un objeto entra en el área de Trigger se llama a la corrutina pasándole el componente PlayerController del jugador.
+```bash
+private IEnumerator Boost(PlayerController player){
+    player.speed = player.speed * aumentoVelocidad;  # Aumentar la Velocidad
+
+    yield return new WaitForSeconds(duracion);       # Pausa la ejecución de la corrutina por la duracion especificada
+
+    player.speed = player.speed / aumentoVelocidad;  # Restaurar la Velocidad
 }
 ```
 ---
