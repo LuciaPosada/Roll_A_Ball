@@ -187,7 +187,7 @@ Este script contiene la posición del destino del teletrasporte y un método par
  <summary>Explicación del código</summary>
 <br>
 
-Referencia al Transform del destino:
+Referencia al Transform del destino.
 ```bash
 public Transform destino;
 ```
@@ -198,6 +198,63 @@ private void OnTriggerEnter(Collider colision) {
     if(colision.CompareTag("Player")){
           colision.transform.position = destino.position;
     }
+}
+```
+---
+</details>
+
+## Trigger de empujón
+
+[Codigo CameraSwitch](Assets/Scripts/Triggers/PushTrigger.cs)
+
+-.
+
+<details>
+ <summary>Explicación del código</summary>
+<br>
+
+Variable con la fuerza del empujón.
+```bash
+public float fuerzaEmpujon = 25f; 
+```
+
+-.
+```bash
+private void OnCollisionEnter(Collision colision){
+    if (colision.gameObject.CompareTag("Player")){
+       Rigidbody player = colision.gameObject.GetComponent<Rigidbody>();
+       if(player != null){
+           Vector3 empuje = transform.right;
+           player.AddForce(empuje*fuerzaEmpujon*-1,ForceMode.Impulse);
+       }
+    }
+}
+```
+---
+</details>
+
+## Trigger de turbo
+
+[Codigo CameraSwitch](Assets/Scripts/Triggers/BosterTrigger.cs)
+
+-.
+
+<details>
+ <summary>Explicación del código</summary>
+<br>
+
+Variables utilizadas:
+```bash
+public float aumentoVelocidad;  # Cantidad por la que se multiplicara la velocidad actual del jugador
+public float duracion;          # Duración del aumento de velocidad
+```
+
+-.
+```bash
+private void OnTriggerEnter(Collider colision){
+    ...
+    StartCoroutine(Boost(player));  # LLamada a Corrutina
+    ...
 }
 ```
 ---
