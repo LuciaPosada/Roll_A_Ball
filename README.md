@@ -304,8 +304,9 @@ private void OnTriggerEnter(Collider other) {
 <details>
  <summary>Gestor de estados</summary>
 <br>
-
-// Pendiente 
-
+ 
+> Estados del enemigo
+> 
+>![Apartado 4](/Img/estados.png)
 
 </details>
