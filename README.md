@@ -1,8 +1,12 @@
 # Camaras del proyecto
 
+<details>
+ <summary>Camaras del proyecto</summary>
+<br>
+
 ## Switch de las camaras 
 
-[Codigo CameraSwitch](Assets/Scripts/CameraSwitch.cs)
+[Codigo CameraSwitch](Assets/Scripts/Cameras/CameraSwitch.cs)
 
 Este script contiene tres variables para almacenar las tres cámaras de proyecto y los métodos correspondientes para su activación y desactivación.
 
@@ -30,7 +34,7 @@ private void Update() {
 
 ## Camara tercera persona
 
-[Codigo CameraController](Assets/Scripts/CameraController.cs)
+[Codigo CameraController](Assets/Scripts/Cameras/CameraController.cs)
 
 Este script utiliza un Vector3 para almacenar la distancia entre cámara y jugador y poder así seguir al jugador manteniendo una distancia constante.
 
@@ -64,7 +68,7 @@ void LateUpdate(){
 
 ## Camara primera persona
 
-[Codigo Camara_PrimPersona](Assets/Scripts/Camara_PrimPersona.cs)
+[Codigo Camara_PrimPersona](Assets/Scripts/Cameras/Camara_PrimPersona.cs)
 
 Este script posiciona la cámara a la misma altura y posición que el objeto controlado por el jugador, permitiendo el movimiento horizontal de esta mediante el raton.
 
@@ -93,7 +97,7 @@ void Update(){
 ---
 </details>
 
-[Codigo PlayerController](Assets/Scripts/PlayerController.cs)
+[Codigo PlayerController](Assets/Scripts/Cameras/PlayerController.cs)
 
 Adicionalmente, el script del objeto que control el jugador contiene una variable para recoger los valores de la cámara de primera persona y así poder ajustar el movimiento del jugador en base a la orientación de esta.
 
@@ -138,7 +142,7 @@ private void FixedUpdate(){
 
 ## Camara global
 
-[Codigo Camera_World](Assets/Scripts/Camera_World.cs)
+[Codigo Camera_World](Assets/Scripts/Cameras/Camera_World.cs)
 
 Este script utiliza enfoca la camara hacia un blanco y va girando alrededor de este.
 
@@ -163,4 +167,145 @@ void Update(){
 Al mantener el eje Z enfocado hacia el blanco evitamos que la cámara se desplace hacia la derecha indefinidamente y la forzamos a rotar al rededor del objeto. 
 
 ---
+</details>
+
+</details>
+
+# Triggers del proyecto
+
+<details>
+ <summary>Triggers del proyecto</summary>
+<br>
+
+## Trigger de tele-transporte
+
+[Codigo Tele-transporte](Assets/Scripts/Triggers/TeletransporteTrigger.cs)
+
+Este script contiene la posición del destino del teletrasporte y un método para realizar la acción una vez el jugador colisiona con el objecto que contiene el trigger.
+
+<details>
+ <summary>Explicación del código</summary>
+<br>
+
+Referencia al Transform del destino.
+```bash
+public Transform destino;
+```
+
+En el método OnTriggerEnte salta si el jugador entra en colisión con el objecto portador del trigger y cambia su posición actual por la del destino.
+```bash
+private void OnTriggerEnter(Collider colision) {
+    if(colision.CompareTag("Player")){
+          colision.transform.position = destino.position;
+    }
+}
+```
+---
+</details>
+
+## Trigger de empujón
+
+[Codigo Empujón](Assets/Scripts/Triggers/PushTrigger.cs)
+
+Aplica una fuerza al jugador cuando colisiona con el objeto que contiene este script.
+
+<details>
+ <summary>Explicación del código</summary>
+<br>
+
+Variable con la fuerza del empujón.
+```bash
+public float fuerzaEmpujon = 25f; 
+```
+
+Al detectar un objeto jugador, se aplica la fuerza especificada hacia la izquierda del objetivo.
+```bash
+private void OnCollisionEnter(Collision colision){
+    if (colision.gameObject.CompareTag("Player")){
+       Rigidbody player = colision.gameObject.GetComponent<Rigidbody>();
+       if(player != null){
+           Vector3 empuje = transform.right;  # Define dirección del empujón (derecha local del objeto)
+           player.AddForce(empuje*fuerzaEmpujon*-1,ForceMode.Impulse); # Cambia dirección del empujón a la contraria
+       }
+    }
+}
+```
+---
+</details>
+
+## Trigger de turbo
+
+[Codigo Turbo](Assets/Scripts/Triggers/BosterTrigger.cs)
+
+Aumenta la velocidad, de un jugador que entre en conctacto con el objeto que contiene este script, por un tiempo determinado y luego la devuelve a la normalidad usando una corrutina.
+
+<details>
+ <summary>Explicación del código</summary>
+<br>
+
+Variables utilizadas:
+```bash
+public float aumentoVelocidad;  # Cantidad por la que se multiplicara la velocidad actual del jugador
+public float duracion;          # Duración del aumento de velocidad
+```
+
+Cuando un objeto entra en el área de Trigger se llama a la corrutina pasándole el componente PlayerController del jugador.
+
+```bash
+private void OnTriggerEnter(Collider colision){
+    ...
+    StartCoroutine(Boost(player));  # LLamada a Corrutina
+```
+
+Cuando un objeto entra en el área de Trigger se llama a la corrutina pasándole el componente PlayerController del jugador.
+```bash
+private IEnumerator Boost(PlayerController player){
+    player.speed = player.speed * aumentoVelocidad;  # Aumentar la Velocidad
+
+    yield return new WaitForSeconds(duracion);       # Pausa la ejecución de la corrutina por la duracion especificada
+
+    player.speed = player.speed / aumentoVelocidad;  # Restaurar la Velocidad
+}
+```
+---
+</details>
+
+## Trigger de Power-Up (Cambios de estados)
+
+[Codigo PowerUp](Assets/Scripts/Triggers/PowerTrigger.cs)
+
+Detecta cuando el jugador entra en su área y activa un Power-Up a través de un script gestor [PowerUpManager](Assets/Scripts/Triggers/PowerUpManager.cs), afectando a todos los enemigos en la escena.
+
+<details>
+ <summary>Explicación del código</summary>
+<br>
+
+Variable con la duración del efecto del Power-Up.
+```bash
+public float duracion; 
+```
+
+De colisionar un jugador, busca todos los objetos en la escena que tengan un Animator y los manda como parametro a PowerUpManager.
+
+```bash
+private void OnTriggerEnter(Collider other) {
+    ...
+    Animator[] enemigosAnimator = FindObjectsOfType<Animator>(); 
+    PowerUpManager.instance.ComenzarPowerUp(enemigosAnimator, duracion);             
+}
+```
+---
+</details>
+
+</details>
+
+# Gestor de estados (Animator Controller)
+
+<details>
+ <summary>Gestor de estados</summary>
+<br>
+
+// Pendiente 
+
+
 </details>
