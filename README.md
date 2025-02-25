@@ -309,4 +309,6 @@ private void OnTriggerEnter(Collider other) {
 > 
 >![Apartado 4](/Img/estados.png)
 
+Cada cambio de estado es causado por un trigger
+
 </details>
